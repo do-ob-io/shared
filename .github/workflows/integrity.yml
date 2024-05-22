@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+
+    steps:
+
+    - name: Checkout Respository
+      uses: actions/checkout@v4
+
+    - uses: pnpm/action-setup@v2
+      with:
+        version: latest
+
+    - name: Setup NodeJS with PNPM Caching
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'lts'
+        registry-url: 'https://registry.npmjs.org'
+        scope: '@do-ob'
+        cache: 'pnpm'
+
+    - name: Install NodeJS Dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Test Projects
+      run: pnpm test
