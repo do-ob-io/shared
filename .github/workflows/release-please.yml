@@ -23,6 +23,10 @@ jobs:
         config-file: release-please-config.json
         manifest-file: release-please-manifest.json
 
+  integrity:
+    uses: do-ob-io/shared/.github/workflows/integrity.yml@main
+    secrets: inherit
+
   publish:
     needs: release-please
     if: ${{ needs.release-please.outputs.releases_created == 'true' || needs.release-please.outputs.releases_created == true }}
