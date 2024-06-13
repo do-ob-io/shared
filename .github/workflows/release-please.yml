@@ -10,7 +10,12 @@ on:
         required: false
 
 jobs:
+  integrity:
+    uses: do-ob-io/shared/.github/workflows/integrity.yml@main
+    secrets: inherit
+  
   release-please:
+    needs: integrity
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
@@ -22,10 +27,6 @@ jobs:
         target-branch: ${{ github.event.inputs.branch }}
         config-file: release-please-config.json
         manifest-file: release-please-manifest.json
-
-  integrity:
-    uses: do-ob-io/shared/.github/workflows/integrity.yml@main
-    secrets: inherit
 
   publish:
     needs: release-please

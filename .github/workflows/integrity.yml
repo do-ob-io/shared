@@ -1,4 +1,4 @@
-name: Publish
+name: Integrity
 
 on:
   workflow_call:
